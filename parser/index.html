@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phone email parser</title>
+    <style>
+      #rawInput {
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+      }
+
+      #filteredData {
+        width: 100%;
+        max-width: 800px;
+        height: 600px;
+        margin: 0 auto;
+        margin-top: 100px;
+        overflow-y: auto;
+      }
+      .w200,
+      .w250,
+      .w300 {
+        display: inline-block;
+        height: 20px;
+      }
+      .w200 {
+        width: 200px;
+      }
+      .w250 {
+        width: 250px;
+      }
+      .w300 {
+        width: 300px;
+      }
+      .record {
+        border: 1px solid beige;
+      }
+      .record:nth-child(2n) {
+        background-color: ghostwhite;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="file" id="inputFile" onchange="processCSV(this)" />
+    <div id="rawInput"></div>
+    <div id="filteredData"></div>
+  </body>
+
+  <script type="text/javascript" src="./scripts/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="./scripts/jquery.csv.js"></script>
+
+  <script>
+    let processedRecords = [];
+    function processCSV(input) {
+      let file = input.files[0];
+      let reader = new FileReader();
+
+      reader.readAsText(file);
+
+      reader.onload = function () {
+        let rawData = $.csv.toArrays(reader.result);
+        document.querySelector("#rawInput").innerHTML = $.csv.toArrays(
+          reader.result
+        );
+
+        console.log(rawData);
+
+        rawData.forEach((element) => {
+          let processedRecord = {};
+          processedRecord.name = element[4];
+          // processedRecord.projects = element[12];
+          GetPhoneEmailFromRawData(processedRecord, element[11]);
+          processedRecords.push(processedRecord);
+        });
+
+        processedRecords.forEach((pr) => {
+          if (pr.phone.length > 1 || pr.email.length > 1) {
+            let name = document.createElement("div");
+            name.classList.add("w250");
+            name.innerHTML = pr.name;
+            let email = document.createElement("div");
+            email.classList.add("w300");
+            email.innerHTML = pr.email;
+            let phone = document.createElement("div");
+            phone.classList.add("w200", "break");
+            phone.innerHTML = pr.phone;
+            let record = document.createElement("div");
+            record.classList.add("record");
+            record.append(name, email, phone);
+            document.querySelector("#filteredData").append(record);
+          }
+        });
+      };
+    }
+
+    function GetPhoneEmailFromRawData(returnVal, rawobject) {
+      returnVal.phone = returnVal.email = "";
+      rawobject = rawobject.replaceAll(
+        /\r?\n|\r|\/|\+|name|email|twitter|phone|mobile|\:/gi,
+        " "
+      );
+      const objArr = rawobject.split(" ");
+      //  console.log(objArr);
+      objArr.forEach((o) => {
+        let filterO = o.replace(/\+|,|(|)/gi, "");
+        if (
+          parseInt(filterO) > 0 &&
+          (filterO.length == 10 || filterO.length == 12)
+        ) {
+          returnVal.phone = filterO;
+        }
+
+        if (validateEmail(filterO)) {
+          returnVal.email = filterO;
+        }
+
+        if (returnVal.phone.length > 1 && returnVal.email.length > 1) {
+          return;
+        }
+      });
+    }
+
+    function validateEmail(email) {
+      var re = /\S+@\S+\.\S+/;
+      return re.test(email);
+    }
+  </script>
+</html>
