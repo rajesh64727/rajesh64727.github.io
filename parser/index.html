@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phone email parser</title>
+    <title>Huzi Inc, CSV parser</title>
     <style>
       #rawInput {
         width: 100%;
@@ -14,7 +14,7 @@
 
       #filteredData {
         width: 100%;
-        max-width: 800px;
+        max-width: 1350px;
         height: 600px;
         margin: 0 auto;
         margin-top: 50px;
@@ -35,8 +35,28 @@
       .w300 {
         width: 300px;
       }
+      .notes {
+        width: 400px;
+        height: 35px;        
+        overflow-y: hidden;
+        cursor: pointer;
+        color: blue;
+      }
+
+      .notes-full{
+        width: 95%;
+        height: fit-content;
+        display: block;
+        font-family: monospace;
+        white-space: pre;
+        margin: 1em;
+        cursor: crosshair;
+        color: revert;
+      }
+
       .record {
         border: 1px solid beige;
+        padding: 5px;
       }
       .record:nth-child(2n) {
         background-color: ghostwhite;
@@ -66,12 +86,10 @@
           reader.result
         );
 
-        console.log(rawData);
-
         rawData.forEach((element) => {
           let processedRecord = {};
           processedRecord.name = element[4];
-          // processedRecord.projects = element[12];
+          processedRecord.notes = element[11]
           GetPhoneEmailFromRawData(processedRecord, element[11]);
           processedRecords.push(processedRecord);
         });
@@ -85,13 +103,20 @@
             email.classList.add("w300");
             email.innerHTML = pr.email;
             let phone = document.createElement("div");
-            phone.classList.add("w200", "break");
+            phone.classList.add("w200");
             phone.innerHTML = pr.phone;
+            let notes = document.createElement("div");
+            notes.classList.add("w300", "notes", "break");
+            notes.innerHTML = pr.notes;
             let record = document.createElement("div");
             record.classList.add("record");
-            record.append(name, email, phone);
+            record.append(name, email, phone, notes);
             document.querySelector("#filteredData").append(record);
           }
+        });
+
+        $(".notes").dblclick(function(){
+          $(this).toggleClass('notes-full');
         });
       };
     }
@@ -103,7 +128,6 @@
         " "
       );
       const objArr = rawobject.split(" ");
-      //  console.log(objArr);
       objArr.forEach((o) => {
         let filterO = o.replace(/\+|,|(|)/gi, "");
         if (
@@ -126,6 +150,6 @@
     function validateEmail(email) {
       var re = /\S+@\S+\.\S+/;
       return re.test(email);
-    }
+    }    
   </script>
 </html>
