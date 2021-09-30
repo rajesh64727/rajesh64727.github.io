@@ -85,6 +85,8 @@ function GetPhoneEmailFromRawData(returnVal, rawobject) {
         " "
     );
     let objArr = rawobject.split(" ");
+    returnVal.phone="";
+    returnVal.email="";
 
     for(o of objArr){
         if (returnVal.phone.length > 1 && returnVal.email.length > 1) {
