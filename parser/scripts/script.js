@@ -102,22 +102,6 @@ function GetPhoneEmailFromRawData(returnVal, rawobject) {
             returnVal.email = filterO.trim();
         }    
     }
-/*
-    objArr.forEach((o) => {
-        if (returnVal.phone.length > 1 && returnVal.email.length > 1) {
-            return true;
-        }
-
-        let filterO = o.replace(/\+\s|,|(|)/gi, "");
-        if (parseInt(filterO) > 0 && ( /^\d{10}$/.test(filterO) || /^\d{12}$/.test(filterO))) {
-            returnVal.phone = filterO.trim();
-        }
-
-        if (validateEmail(filterO)) {
-            returnVal.email = filterO.trim();
-        }        
-    });
-    */
 }
 
 
