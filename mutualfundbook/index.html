@@ -42,23 +42,42 @@
             display: block;
             font-size: small;
         }
+
+        select{
+            width: fit-content;
+            height: 3em;
+            border: none;
+        }
+
+        .hide{
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img id="bookSource" src="https://virtualbooks.taxmann.com/flipbooks/897649/files/mobile/1.jpg" />
-
-        <button class="btn-nav" id="start">Start</button>
-        <button class="btn-nav" id="previous">Previous</button>
-        <span class="btn-nav" id="current"> 1 of 430 </span>
-        <button class="btn-nav" id="next">Next</button>
-        <button class="btn-nav" id="end">End</button>
-        <br/>
-        <a class="small" href="https://rajesh64727.github.io">Thanks</a>
+        <label for="books">Book :</label>
+        <select name="books" id="books" onchange="loadSelectedBook()"></select>
+        <div class="bookContent hide">
+            <img id="bookSource" src="#" />
+            <button class="btn-nav" id="start">Start</button>
+            <button class="btn-nav" id="previous">Previous</button>
+            <label for="pages">Page :</label>
+            <select name="pages" id="pages" onchange="loadSelectedPage()"></select>
+            <button class="btn-nav" id="next">Next</button>
+            <button class="btn-nav" id="end">End</button>
+            <br/>
+            <a class="small" href="https://rajesh64727.github.io">Thanks</a>
+        </div>
     </div>    
     <script>
-        const baseURL = 'https://virtualbooks.taxmann.com/flipbooks/897649/files/mobile/';
-        const totalPages = 430;
+        const books = [
+            {name:"Select a Book"}, 
+            {name:"Mutual Fund Foundation", pages: 306, bookID: "897687"}, 
+            {name:"Mutual Fund Distributor", pages: 430, bookID: "897649"}
+        ];
+        let baseURL = 'https://virtualbooks.taxmann.com/flipbooks/897649/files/mobile/';
+        let totalPages = 430;
         let currentPageNumber = 1;
         let currentURL = "";
 
@@ -76,16 +95,55 @@
             
             currentURL = baseURL + currentPageNumber + ".jpg";
             document.querySelector("#bookSource").setAttribute('src', currentURL);
-            document.querySelector('#current').innerText = currentPageNumber + " of " + totalPages;
+            document.getElementById("pages").selectedIndex = currentPageNumber - 1;
         }
+
+        function addPages() {
+            const ddl = document.getElementById("pages");
+            ddl.length = 0;
+            for(let i=1; i<= totalPages; i++){
+                let option = document.createElement("OPTION");
+                option.innerHTML = i;
+                option.value = i;
+                ddl.options.add(option);
+            }            
+        }
+
+        function loadSelectedPage(){
+            const ddl = document.getElementById("pages");
+            let selectedPage = parseInt(ddl[ddl.selectedIndex].value);
+            if(selectedPage != null && selectedPage != undefined){
+                currentPageNumber = selectedPage;
+                updateIFrame();
+            }
+        }
+
+        function loadBooks(){
+            const ddl = document.getElementById("books");
+            ddl.length = 0;
+            for(let i=0; i< books.length; i++){
+                let option = document.createElement("OPTION");
+                option.innerHTML = books[i].name;
+                option.value = books[i].bookID;
+                ddl.options.add(option);
+            }
+        }
+
+        function loadSelectedBook(){
+            const ddl = document.getElementById("books");
+            let selectedBookID = parseInt(ddl[ddl.selectedIndex].value);
+            if(selectedBookID != null && selectedBookID != undefined){
+                baseURL = 'https://virtualbooks.taxmann.com/flipbooks/'+selectedBookID+'/files/mobile/';
+                totalPages = books[ddl.selectedIndex].pages;
+                currentPageNumber = 1;
+                addPages();
+                updateIFrame();
+                document.querySelector('.bookContent').classList.remove('hide');
+            }else{
+                document.querySelector('.bookContent').classList.add('hide');
+            }
+        }
+        loadBooks();
     </script>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-157357094-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-157357094-1');
-</script>
 </body>
 </html>
