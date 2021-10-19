@@ -12,6 +12,8 @@ const books = [
 let baseURL = 'https://virtualbooks.taxmann.com/flipbooks/897649/files/mobile/';
 let totalPages = 430;
 let currentPageNumber = 1;
+let prevPageNumber = 1;
+let nextPageNumber = 2;
 let currentURL = "";
 
 ////////////////////// DATA END /////////////////////////
@@ -19,21 +21,45 @@ let currentURL = "";
 
 ////////////////////// EVENTS START /////////////////////////
 
-document.querySelector('#start').addEventListener('click', function(){ currentPageNumber = 1; updateIFrame(); });
-document.querySelector('#end').addEventListener('click', function(){ currentPageNumber = totalPages; updateIFrame(); });
-document.querySelector('#previous').addEventListener('click', function(){ currentPageNumber--; updateIFrame(); });
-document.querySelector('#next').addEventListener('click', function(){ currentPageNumber++; updateIFrame(); });
+const btnStart = document.querySelector('#start');
+const btnNext = document.querySelector('#next');
+const btnPrev = document.querySelector('#previous');
+const btnEnd = document.querySelector('#end');
+const pageImage = document.querySelector('#bookSource');
+const bookContainer = document.querySelector('#container');
 
-document.querySelector('#bookSource').addEventListener('click', function(){ 
-    document.querySelector('#bookSource').classList.toggle("full");
-});
+btnStart.addEventListener('click', function(){ currentPageNumber = 1; updateIFrame(); });
+btnPrev.addEventListener('click', function(){ currentPageNumber--; updateIFrame(); });
+btnNext.addEventListener('click', function(){ currentPageNumber++; updateIFrame(); });
+btnEnd.addEventListener('click', function(){ currentPageNumber = totalPages; updateIFrame(); });
+
+pageImage.addEventListener('click', function(){ pageImage.classList.toggle("full");});
+
+bookContainer.addEventListener('click', 
+    function(event){ 
+        if( event.target.id == 'bookContent'){
+            if(event.clientX < window.innerWidth/2){
+                currentPageNumber--; updateIFrame();
+            }else if(event.clientX > window.innerWidth/2){
+                currentPageNumber++; updateIFrame();
+            }
+        }
+    });
 
 function updateIFrame(){
     if(currentPageNumber < 1 || currentPageNumber > totalPages ) { currentPageNumber = 1; }
     
     currentURL = baseURL + currentPageNumber + ".jpg";
-    document.querySelector("#bookSource").setAttribute('src', currentURL);
+    pageImage.setAttribute('src', currentURL);
     document.getElementById("pages").selectedIndex = currentPageNumber - 1;
+
+    prevPageNumber = currentPageNumber - 1;
+    nextPageNumber = currentPageNumber + 1;
+
+    if(prevPageNumber < 1){  prevPageNumber = 1; }
+    if(nextPageNumber > totalPages){ nextPageNumber = totalPages; }
+    
+    bookContainer.style.backgroundImage = "url("+baseURL+prevPageNumber+".jpg), url("+baseURL+nextPageNumber+".jpg)";
 }
 
 function addPages() {

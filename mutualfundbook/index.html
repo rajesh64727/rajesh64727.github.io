@@ -8,17 +8,21 @@
     <title>Mutual Fund Distributors' Books</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="container">
         <label for="books">Book :</label>
         <select name="books" id="books" onchange="loadSelectedBook()"></select>
-        <div class="bookContent hide">
+        <div class="bookContent hide" id="bookContent">
             <img id="bookSource" src="#" />
-            <button class="btn-nav" id="start">Start</button>
-            <button class="btn-nav" id="previous">Previous</button>
-            <label for="pages">Page :</label>
-            <select name="pages" id="pages" onchange="loadSelectedPage()"></select>
-            <button class="btn-nav" id="next">Next</button>
-            <button class="btn-nav" id="end">End</button>
+            <div class="controls">
+                <button class="btn-nav" id="start">Start</button>
+                <button class="btn-nav" id="previous">Previous</button>
+                <div class="page-count" id="page-count">
+                    <label for="pages">Page :</label>
+                    <select name="pages" id="pages" onchange="loadSelectedPage()"></select>
+                </div>            
+                <button class="btn-nav" id="next">Next</button>
+                <button class="btn-nav" id="end">End</button>
+            </div>            
             <br/>
             <a class="small" href="https://rajesh64727.github.io">Thanks</a>
         </div>

@@ -7,9 +7,21 @@ body{
     height: 100%;
     margin: 0 auto;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1920px;
     text-align: center;
+
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: left top, right top;
+    background-color: rgba(255, 255, 255, 0.55);
+    background-blend-mode: exclusion;
+    background-position-y: 40px;
 }
+
+.bookContent{
+    cursor: pointer;
+}
+
 
 img{
     display: block; 
@@ -24,6 +36,15 @@ img.full{
     height: 100%;
     cursor: zoom-out;
 }
+
+.controls{
+    background-color: white;
+}
+
+.page-count{
+    display: inline-block;
+}
+
 .btn-nav{
     min-width: 150px;
     font-size: 1.5em;
@@ -43,4 +64,17 @@ select{
 
 .hide{
     display: none;
+}
+
+@media screen and (max-width: 1023px){
+    .container{
+        width: 100%;
+    }
+    img{
+        width: 100%;
+        height: auto;        
+    }
+    .page-count{
+        display: block;
+    }
 }
