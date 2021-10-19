@@ -54,6 +54,8 @@ img.full{
 .small{
     display: block;
     font-size: small;
+    background-color: white;
+    color: blue;
 }
 
 select{
