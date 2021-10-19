@@ -1,0 +1,46 @@
+body{
+    margin: 0;
+    padding: 0;
+    background-color: ghostwhite;
+}
+.container{ 
+    height: 100%;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1300px;
+    text-align: center;
+}
+
+img{
+    display: block; 
+    height: 90vh;
+    overflow-y: auto;
+    margin: 5px auto;
+    cursor: zoom-in;
+    border-radius: 5px;
+}
+
+img.full{
+    height: 100%;
+    cursor: zoom-out;
+}
+.btn-nav{
+    min-width: 150px;
+    font-size: 1.5em;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.small{
+    display: block;
+    font-size: small;
+}
+
+select{
+    width: fit-content;
+    height: 3em;
+    border: none;
+}
+
+.hide{
+    display: none;
+}
