@@ -58,10 +58,11 @@ img.full{
     color: blue;
 }
 
-select{
+#books, select{    
     width: fit-content;
-    height: 3em;
+    font-size: 1.5em;
     border: none;
+    border-radius: 10px;
 }
 
 .hide{

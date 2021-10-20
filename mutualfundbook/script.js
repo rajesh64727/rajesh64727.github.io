@@ -1,7 +1,7 @@
 ////////////////////// DATA START /////////////////////////
 
 const books = [
-    {name:"Select a Book"}, 
+    {name:"Please Select a Book", pages: 0, bookID: "-1"}, 
     {name:"Mutual Fund Foundation", pages: 306, bookID: "897687"}, 
     {name:"Mutual Fund Distributors", pages: 430, bookID: "897649"},
     {name:"Mutual Fund Distributors - Hindi", pages: 380, bookID: "897606"},
@@ -95,9 +95,8 @@ function loadBooks(){
 
 function loadSelectedBook(){
     const ddl = document.getElementById("books");
-    let selectedBookID = parseInt(ddl[ddl.selectedIndex].value);
-    if(selectedBookID != null && selectedBookID != undefined){
-        baseURL = 'https://virtualbooks.taxmann.com/flipbooks/'+selectedBookID+'/files/mobile/';
+    if(ddl[ddl.selectedIndex].value != -1){
+        baseURL = 'https://virtualbooks.taxmann.com/flipbooks/' + ddl[ddl.selectedIndex].value + '/files/mobile/';
         totalPages = books[ddl.selectedIndex].pages;
         currentPageNumber = 1;
         addPages();
