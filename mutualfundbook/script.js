@@ -2,10 +2,11 @@
 
 const books = [
     {name:"Please Select a Book", pages: 0, bookID: "-1"}, 
+    {name:"Investment Adviser Level 2", pages: 326, bookID: "897605"},
     {name:"Mutual Fund Foundation", pages: 306, bookID: "897687"}, 
     {name:"Mutual Fund Distributors", pages: 430, bookID: "897649"},
     {name:"Mutual Fund Distributors - Hindi", pages: 380, bookID: "897606"},
-    {name:"Mutual Fund Distributors 2", pages: 216, bookID: "897607"},
+    {name:"Mutual Fund Distributors Level 2", pages: 216, bookID: "897607"},    
     {name:"Principles of Economics", pages: 552, bookID: "897700"},
     {name:"Fundamentals of Investments", pages: 632, bookID: "897674"}
 ];
