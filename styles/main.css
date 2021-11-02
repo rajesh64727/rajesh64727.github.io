@@ -7273,3 +7273,10 @@ a.credit {
 .section {
   padding-bottom: 0;
 }
+
+.center-image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
