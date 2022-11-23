@@ -7167,7 +7167,7 @@ Created using IcoMoon - icomoon.io
 }
 
 /* Experience Style */
-.cc-experience .cc-experience-header {
+.cc-experience .cc-experience-header, .cc-education .cc-education-header, .cc-certifications .cc-certifications-header {
   padding-top: 60px;
   padding-right: 0;
   text-align: center;
@@ -7178,13 +7178,6 @@ Created using IcoMoon - icomoon.io
 /* Education Style */
 .cc-education .h5 {
   margin-bottom: 0;
-}
-
-.cc-education .cc-education-header {
-  padding-top: 60px;
-  padding-right: 0;
-  text-align: center;
-  color: #fff;
 }
 
 /* References Style */
